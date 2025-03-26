@@ -24,6 +24,7 @@ public class BookDAO implements BookDAOInterface {
 
     @Override
     public List<BookDTO> getAllBooks() {
+        if(books.isEmpty())return null;
         return new ArrayList<>(books.values());
 
     }

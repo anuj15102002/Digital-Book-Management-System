@@ -45,7 +45,7 @@ public class BookManagementMain {
                     break;
                 case 2:
                     List<BookDTO> books=bookDAO.getAllBooks();
-                    if(books==null)
+                    if(books.isEmpty())
                     {
                         System.out.println("No books are added");
                         break;
