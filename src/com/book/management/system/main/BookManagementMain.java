@@ -1,15 +1,19 @@
 package com.book.management.system.main;
 
-import com.book.management.system.dto.BookDTO;
-import com.book.management.system.library.services.LibraryService;
+import com.book.management.system.dao.BookDAO;
+import com.book.management.system.dto.*;
+import com.book.management.system.dto.interfaces.*;
+import com.book.management.system.dao.interfaces.*;
+import com.book.management.system.dto.*;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class BookManagementMain {
     public static void main(String args[])
     {
         Scanner scanner = new Scanner(System.in);
-        LibraryService libraryService = new LibraryService();
+        BookDAO bookDAO=new BookDAO();
 
         while (true) {
             System.out.println("\nLibrary Management System");
@@ -37,14 +41,37 @@ public class BookManagementMain {
                     System.out.print("Is Available? (true/false): ");
                     boolean availability = scanner.nextBoolean();
                     scanner.nextLine();
-                    libraryService.addBook(new BookDTO(id, title, author, genre, availability));
+                    bookDAO.addBook(new BookDTO(id, title, author, genre, availability));
                     break;
                 case 2:
-                    libraryService.viewBooks();
+                    List<BookDTO> books=bookDAO.getAllBooks();
+                    if(books==null)
+                    {
+                        System.out.println("No books are added");
+                        break;
+                    }
+                    for(BookDTO b: books)
+                    {
+                        System.out.println("Book id: "+b.getId());
+                        System.out.println("Book Title: "+b.getTitle());
+                        System.out.println("Book Author: "+b.getAuthor());
+                        System.out.println("Book Genre: "+b.getAuthor());
+                        System.out.println("Book Availability: "+b.isAvailable());
+                    }
                     break;
                 case 3:
                     System.out.print("Enter Book ID: ");
-                    libraryService.searchBook(scanner.nextLine());
+                    BookDTO book= bookDAO.getBookById(scanner.nextLine());
+                    if(book==null)
+                    {
+                        System.out.println("Book not found");
+                        break;
+                    }
+                    System.out.println("Book id: "+book.getId());
+                    System.out.println("Book Title: "+book.getTitle());
+                    System.out.println("Book Author: "+book.getAuthor());
+                    System.out.println("Book Genre: "+book.getAuthor());
+                    System.out.println("Book Availability: "+book.isAvailable());
                     break;
                 case 4:
                     System.out.print("Enter Book ID to update: ");
@@ -58,11 +85,13 @@ public class BookManagementMain {
                     System.out.print("Is Available? (true/false): ");
                     boolean newAvailability = scanner.nextBoolean();
                     scanner.nextLine();
-                    libraryService.updateBook(bookId, new BookDTO(bookId, newTitle, newAuthor, newGenre, newAvailability));
+                    bookDAO.updateBook(bookId, new BookDTO(bookId, newTitle, newAuthor, newGenre, newAvailability));
+                    System.out.println("Book Updated");
                     break;
                 case 5:
                     System.out.print("Enter Book ID to delete: ");
-                    libraryService.deleteBook(scanner.nextLine());
+                    bookDAO.deleteBook(scanner.nextLine());
+                    System.out.println("Book deleted");
                     break;
                 case 6:
                     System.out.println("Exiting system...");
