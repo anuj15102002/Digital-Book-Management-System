@@ -5,12 +5,19 @@ The Digital Book Management System is a Java-based application that allows users
 ->Project Structure
 
 Digital-Book-Management-System/
+
 ├── src/                # Source code files
+
 │   ├── Main.java       # Entry point of the application
+
 │   ├── Book.java       # Model class for book entity
+
 │   ├── BookManager.java # Handles book operations
+
 │   └── ...
+
 ├── README.md          # Project documentation
+
 └── .gitignore         # Git ignore file
 
 ->How to Run the Project
