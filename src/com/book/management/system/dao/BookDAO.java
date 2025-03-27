@@ -1,12 +1,6 @@
 package com.book.management.system.dao;
 import com.book.management.system.dao.interfaces.BookDAOInterface;
-import com.book.management.system.dto.interfaces.*;
 import com.book.management.system.dto.*;
-
-
-
-
-import java.awt.print.Book;
 import java.util.*;
 
 public class BookDAO implements BookDAOInterface {
@@ -24,7 +18,7 @@ public class BookDAO implements BookDAOInterface {
 
     @Override
     public List<BookDTO> getAllBooks() {
-        if(books.isEmpty())return null;
+        if(books.isEmpty())System.out.println("There are no books");
         return new ArrayList<>(books.values());
 
     }

@@ -2,15 +2,13 @@ package com.book.management.system.main;
 
 import com.book.management.system.dao.BookDAO;
 import com.book.management.system.dto.*;
-import com.book.management.system.dto.interfaces.*;
-import com.book.management.system.dao.interfaces.*;
-import com.book.management.system.dto.*;
+import com.book.management.system.enums.Availability;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class BookManagementMain {
-    public static void main(String args[])
+    public static void main(String[] args)
     {
         Scanner scanner = new Scanner(System.in);
         BookDAO bookDAO=new BookDAO();
@@ -38,18 +36,12 @@ public class BookManagementMain {
                     String author = scanner.nextLine();
                     System.out.print("Enter Genre: ");
                     String genre = scanner.nextLine();
-                    System.out.print("Is Available? (true/false): ");
-                    boolean availability = scanner.nextBoolean();
-                    scanner.nextLine();
+                    System.out.print("Availablity Status(AVAILABLE/CHECKED_OUT): ");
+                    Availability availability = Availability.valueOf(scanner.nextLine());
                     bookDAO.addBook(new BookDTO(id, title, author, genre, availability));
                     break;
                 case 2:
                     List<BookDTO> books=bookDAO.getAllBooks();
-                    if(books.isEmpty())
-                    {
-                        System.out.println("No books are added");
-                        break;
-                    }
                     for(BookDTO b: books)
                     {
                         System.out.println("Book id: "+b.getId());
@@ -57,6 +49,7 @@ public class BookManagementMain {
                         System.out.println("Book Author: "+b.getAuthor());
                         System.out.println("Book Genre: "+b.getAuthor());
                         System.out.println("Book Availability: "+b.isAvailable());
+                        System.out.println("-----------------------------------------");
                     }
                     break;
                 case 3:
@@ -82,8 +75,8 @@ public class BookManagementMain {
                     String newAuthor = scanner.nextLine();
                     System.out.print("Enter new Genre: ");
                     String newGenre = scanner.nextLine();
-                    System.out.print("Is Available? (true/false): ");
-                    boolean newAvailability = scanner.nextBoolean();
+                    System.out.print("Availability Status(AVAILABLE/CHECKED_OUT): ");
+                    Availability newAvailability = Availability.valueOf(scanner.nextLine());
                     scanner.nextLine();
                     bookDAO.updateBook(bookId, new BookDTO(bookId, newTitle, newAuthor, newGenre, newAvailability));
                     System.out.println("Book Updated");

@@ -1,6 +1,9 @@
 package com.book.management.system.dto;
 
 import com.book.management.system.dto.interfaces.BookDTOInterface;
+import com.book.management.system.enums.Availability;
+
+import static com.book.management.system.enums.Availability.AVAILABLE;
 
 public class BookDTO implements BookDTOInterface {
 
@@ -8,7 +11,7 @@ public class BookDTO implements BookDTOInterface {
     private String title;
     private String author;
     private String genre;
-    private boolean isAvailable;
+    private Availability availablityStatus;
 
     public BookDTO()
     {
@@ -16,15 +19,16 @@ public class BookDTO implements BookDTOInterface {
         this.title=null;
         this.author=null;
         this.genre=null;
-        this.isAvailable=false;
+        this.availablityStatus=AVAILABLE;
     }
 
-    public BookDTO(String id, String title, String author, String genre, boolean isAvailable) {
+    public BookDTO(String id, String title, String author, String genre, Availability availability
+    ) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.genre = genre;
-        this.isAvailable = isAvailable;
+        this.availablityStatus = availability;
     }
 
     @Override
@@ -55,12 +59,12 @@ public class BookDTO implements BookDTOInterface {
     }
 
     @Override
-    public boolean isAvailable() {
-        return isAvailable;
+    public Availability isAvailable() {
+        return availablityStatus;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setAvailable(Availability available) {
+        availablityStatus = available;
     }
 
     @Override
