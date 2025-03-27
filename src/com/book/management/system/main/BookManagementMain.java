@@ -29,16 +29,54 @@ public class BookManagementMain {
             switch (choice) {
                 case 1:
                     System.out.print("Enter Book ID: ");
-                    String id = scanner.nextLine();
+                    String id = scanner.nextLine().trim();
+
+// Check if the Book ID is empty
+                    if (id.isEmpty()) {
+                        System.out.println("Book ID cannot be empty.");
+                        break;
+                    }
+
+// Check if the Book ID is already in use
+                    if (bookDAO.getBookById(id)!=null) {
+                        System.out.println("A book with this ID already exists. Please enter a unique ID.");
+                        break;
+                    }
+
                     System.out.print("Enter Title: ");
-                    String title = scanner.nextLine();
+                    String title = scanner.nextLine().trim();
+                    if (title.isEmpty()) {
+                        System.out.println("Title cannot be empty.");
+                        break;
+                    }
+
                     System.out.print("Enter Author: ");
-                    String author = scanner.nextLine();
+                    String author = scanner.nextLine().trim();
+                    if (author.isEmpty()) {
+                        System.out.println("Author cannot be empty.");
+                        break;
+                    }
+
                     System.out.print("Enter Genre: ");
-                    String genre = scanner.nextLine();
-                    System.out.print("Availablity Status(AVAILABLE/CHECKED_OUT): ");
-                    Availability availability = Availability.valueOf(scanner.nextLine());
+                    String genre = scanner.nextLine().trim();
+                    if (genre.isEmpty()) {
+                        System.out.println("Genre cannot be empty.");
+                        break;
+                    }
+
+                    System.out.print("Availability Status (AVAILABLE/CHECKED_OUT): ");
+                    String statusInput = scanner.nextLine().trim().toUpperCase();
+
+                    Availability availability;
+                    try {
+                        availability = Availability.valueOf(statusInput);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid availability status! Use AVAILABLE or CHECKED_OUT.");
+                        break;
+                    }
+
                     bookDAO.addBook(new BookDTO(id, title, author, genre, availability));
+                    System.out.println("Book added successfully.");
                     break;
                 case 2:
                     List<BookDTO> books=bookDAO.getAllBooks();
@@ -48,7 +86,7 @@ public class BookManagementMain {
                         System.out.println("Book Title: "+b.getTitle());
                         System.out.println("Book Author: "+b.getAuthor());
                         System.out.println("Book Genre: "+b.getAuthor());
-                        System.out.println("Book Availability: "+b.isAvailable());
+                        System.out.println("Book Availability: "+b.getAvailablityStatus());
                         System.out.println("-----------------------------------------");
                     }
                     break;
@@ -64,20 +102,49 @@ public class BookManagementMain {
                     System.out.println("Book Title: "+book.getTitle());
                     System.out.println("Book Author: "+book.getAuthor());
                     System.out.println("Book Genre: "+book.getAuthor());
-                    System.out.println("Book Availability: "+book.isAvailable());
+                    System.out.println("Book Availability: "+book.getAvailablityStatus());
                     break;
                 case 4:
                     System.out.print("Enter Book ID to update: ");
-                    String bookId = scanner.nextLine();
+                    String bookId = scanner.nextLine().trim();
+
+                    if (bookId.isEmpty()) {
+                        System.out.println("Book ID cannot be empty.");
+                        break;
+                    }
+
                     System.out.print("Enter new Title: ");
-                    String newTitle = scanner.nextLine();
+                    String newTitle = scanner.nextLine().trim();
+                    if (newTitle.isEmpty()) {
+                        System.out.println("Title cannot be empty.");
+                        break;
+                    }
+
                     System.out.print("Enter new Author: ");
-                    String newAuthor = scanner.nextLine();
+                    String newAuthor = scanner.nextLine().trim();
+                    if (newAuthor.isEmpty()) {
+                        System.out.println("Author cannot be empty.");
+                        break;
+                    }
+
                     System.out.print("Enter new Genre: ");
-                    String newGenre = scanner.nextLine();
-                    System.out.print("Availability Status(AVAILABLE/CHECKED_OUT): ");
-                    Availability newAvailability = Availability.valueOf(scanner.nextLine());
-                    scanner.nextLine();
+                    String newGenre = scanner.nextLine().trim();
+                    if (newGenre.isEmpty()) {
+                        System.out.println("Genre cannot be empty.");
+                        break;
+                    }
+
+                    System.out.print("Availability Status (AVAILABLE/CHECKED_OUT): ");
+                    String status = scanner.nextLine().trim().toUpperCase();
+
+                    Availability newAvailability;
+                    try {
+                        newAvailability = Availability.valueOf(status);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid availability status! Use AVAILABLE or CHECKED_OUT.");
+                        break;
+                    }
+
                     bookDAO.updateBook(bookId, new BookDTO(bookId, newTitle, newAuthor, newGenre, newAvailability));
                     System.out.println("Book Updated");
                     break;

@@ -65,3 +65,17 @@ Digital-Book-Management-System/
 * Compile the Java files: javac -d out src/*.java
 
 * Run the application: java -cp out Main
+
+## Challenges Faced
+
+1. **Handling User Input & Validation**
+    - Ensuring all required fields (Book ID, Title, Author, Genre, Status) are provided.
+    - Preventing duplicate Book IDs and invalid availability status.
+
+2. **Managing In-Memory Data Storage**
+    - Storing book details in a collection instead of a database.
+    - Ensuring books can be searched, updated, and deleted efficiently.
+
+3. **Error Handling & User Experience**
+    - Handling invalid inputs to prevent program crashes.
+    - Implementing a user-friendly menu-driven system for ease of navigation.  
